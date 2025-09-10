@@ -1,0 +1,60 @@
+# ==================================================================
+#  Step 10b: Train baseline model (Snowpark Python)
+#  PURPOSE: Fit a baseline classifier and report core metrics
+#  DETAILS:
+#    Input view: FRAUD_DETECTION.ANALYTICS.ML_FEATURES
+#    Train on SPLIT='TRAIN', evaluate on SPLIT='TEST'
+#    Pipeline: StandardScaler -> LogisticRegression (class_weight='balanced')
+#    Output: metrics table (ROC_AUC, TN, FP, FN, TP)
+# ==================================================================
+
+import snowflake.snowpark as snowpark
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
+from sklearn.metrics import roc_auc_score, confusion_matrix
+import pandas as pd
+
+def main(session: snowpark.Session):
+    # Context (safe to omit if session already set
+    session.sql("USE WAREHOUSE FRAUD_WH").collect()
+    session.sql("USE DATABASE FRAUD_DETECTION").collect()
+    session.sql("USE SCHEMA ANALYTICS").collect()
+    
+    # Materialize train/test sets from ML_FEATURES
+    train = session.sql("""
+        SELECT * FROM FRAUD_DETECTION.ANALYTICS.ML_FEATURES
+        WHERE SPLIT = 'TRAIN'
+    """).to_pandas()
+    
+    test = session.sql("""
+        SELECT * FROM FRAUD_DETECTION.ANALYTICS.ML_FEATURES
+        WHERE SPLIT = 'TEST'
+    """).to_pandas()
+    
+    # Feature matrix and target
+    features = ['AMOUNT'] + [f'V{i}' for i in range(1,29)]          # V1..V28 plus AMOUNT
+    X_train, y_train = train[features], train['LABEL'].astype(int)
+    X_test,  y_test  = test[features],  test['LABEL'].astype(int)
+    
+    # Baseline classifier
+    pipe = Pipeline([
+        ("scaler", StandardScaler()),
+        ("clf", LogisticRegression(max_iter=1000, class_weight="balanced"))
+    ])
+    pipe.fit(X_train, y_train)
+    
+    # Evaluation on TEST
+    y_proba = pipe.predict_proba(X_test)[:,1]
+    y_labels = pipe.predict(X_test)
+    roc = roc_auc_score(y_test, y_proba)
+    tn, fp, fn, tp = confusion_matrix(y_test, y_labels).ravel()
+    
+    # Metrics table
+    results = pd.DataFrame({
+        "metric": ["ROC_AUC", "TN", "FP", "FN", "TP"],
+        "value":  [   roc   ,  tn,   fp,   fn,   tp ]
+    })
+    
+    # Return as Snowpark DataFrame
+    return session.create_dataframe(results)
