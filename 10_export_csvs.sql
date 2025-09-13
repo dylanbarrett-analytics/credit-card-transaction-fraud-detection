@@ -1,5 +1,5 @@
 /* ==================================================================
-   Step 11: Export reporting views to CSV
+   Step 10: Export reporting views to CSV
    PURPOSE: Produce reproducible CSV extracts for Tableau
    DETAILS:
      Target stage: REPORTING.EXPORT_STAGE
@@ -52,3 +52,4 @@ LIST @EXPORT_STAGE;
 -- REMOVE @EXPORT_STAGE/RPT_DASHBOARD_HEADER/;
 -- REMOVE @EXPORT_STAGE/RPT_FEATURE_PROFILE/;
 -- REMOVE @EXPORT_STAGE/RPT_FEATURE_DRILL_DOWN_BINS/;
+
