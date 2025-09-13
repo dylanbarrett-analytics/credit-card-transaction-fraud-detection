@@ -3,8 +3,7 @@
    PURPOSE: Provide views for parameterized slicing and charting
    DETAILS:
      RPT_FEATURE_DRILLDOWN_STATS: mean/median/stddev per feature by class and split
-     RPT_FEATURE_DRILLDOWN_BINS: normalized histogram bins (class % within split/feature)
-     RPT_FEATURE_SEPARATION_SUMMARY: DIFF and SEPARATION per feature by split
+     RPT_FEATURE_DRILLDOWN_BINS: normalized feature value distribution bins (class % within split/feature)
      Source table: ANALYTICS.TRANSACTIONS_SPLIT
      Includes splits: TRAIN, VALID, TEST
    ================================================================== */
@@ -58,10 +57,10 @@ FROM UNPIVOTED
 GROUP BY SPLIT, FEATURE, CLASS_LABEL;
 
 -- ------------------------------------------------------------------
--- Normalized histogram bins per feature and split (class % within group)
+-- Normalized feature value distribution bins per feature and split (class % within group)
 -- ------------------------------------------------------------------
 CREATE OR REPLACE VIEW RPT_FEATURE_DRILL_DOWN_BINS
-COMMENT = 'Normalized histogram bins per feature and split; % within FRAUD/LEGIT' AS
+COMMENT = 'Normalized feature value distribution bins per feature and split; % within FRAUD/LEGIT' AS
 WITH CASTED AS (
     SELECT
         SPLIT,
@@ -152,56 +151,5 @@ SELECT
     bin_max
 FROM PIVOT_CDF;
 
--- ------------------------------------------------------------------
--- Feature separation summary (DIFF and SEPARATION per feature by split)
--- ------------------------------------------------------------------
-CREATE OR REPLACE VIEW RPT_FEATURE_SEPARATION_SUMMARY
-COMMENT = 'Per-split feature separation: DIFF and SEPARATION across V1-V28 and AMOUNT' AS
-WITH CASTED AS (
-    SELECT
-        SPLIT,
-        IFF(IS_FRAUD, 'FRAUD', 'LEGIT') AS CLASS_LABEL,
-        AMOUNT::FLOAT AS AMOUNT,
-         V1::FLOAT AS V1,   V2::FLOAT AS V2,   V3::FLOAT AS V3,   V4::FLOAT AS V4,
-         V5::FLOAT AS V5,   V6::FLOAT AS V6,   V7::FLOAT AS V7,   V8::FLOAT AS V8,
-         V9::FLOAT AS V9,  V10::FLOAT AS V10, V11::FLOAT AS V11, V12::FLOAT AS V12,
-        V13::FLOAT AS V13, V14::FLOAT AS V14, V15::FLOAT AS V15, V16::FLOAT AS V16,
-        V17::FLOAT AS V17, V18::FLOAT AS V18, V19::FLOAT AS V19, V20::FLOAT AS V20,
-        V21::FLOAT AS V21, V22::FLOAT AS V22, V23::FLOAT AS V23, V24::FLOAT AS V24,
-        V25::FLOAT AS V25, V26::FLOAT AS V26, V27::FLOAT AS V27, V28::FLOAT AS V28
-    FROM FRAUD_DETECTION.ANALYTICS.TRANSACTIONS_SPLIT
-),
-UNPIVOTED AS (
-    SELECT
-        SPLIT,
-        CLASS_LABEL,
-        FEATURE,
-        VALUE::FLOAT AS VALUE
-    FROM CASTED
-    UNPIVOT (VALUE FOR FEATURE IN (
-        AMOUNT, V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14,
-        V15, V16, V17, V18, V19, V20, V21, V22, V23, V24, V25, V26, V27, V28
-    ))
-),    
-CLASS_AVERAGES AS (
-    SELECT
-        SPLIT,
-        FEATURE,
-        AVG(IFF(CLASS_LABEL = 'FRAUD', VALUE, NULL)) AS FRAUD_AVG,
-        AVG(IFF(CLASS_LABEL = 'LEGIT', VALUE, NULL)) AS LEGIT_AVG
-    FROM UNPIVOTED
-    GROUP BY SPLIT, FEATURE
-)
-SELECT
-    SPLIT,
-    FEATURE,
-    FRAUD_AVG,
-    LEGIT_AVG,
-    FRAUD_AVG - LEGIT_AVG      AS DIFF,
-    ABS(FRAUD_AVG - LEGIT_AVG) AS SEPARATION,
-    DENSE_RANK() OVER (PARTITION BY SPLIT ORDER BY ABS(FRAUD_AVG - LEGIT_AVG) DESC) AS rank_within_split
-FROM CLASS_AVERAGES;
-
 -- SELECT * FROM RPT_FEATURE_DRILL_DOWN_STATS ORDER BY SPLIT, FEATURE, CLASS_LABEL;
 -- SELECT * FROM RPT_FEATURE_DRILL_DOWN_BINS ORDER BY SPLIT, FEATURE, BIN;
--- SELECT * FROM RPT_FEATURE_SEPARATION_SUMMARY ORDER BY SPLIT, SEPARATION DESC, FEATURE;
