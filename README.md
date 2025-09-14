@@ -13,6 +13,7 @@ This project demonstrates an end-to-end **fraud detection analysis pipeline** in
 The data comes from the **[Credit Card Fraud Detection Dataset (2023)](https://www.kaggle.com/datasets/nelgiriyewithana/credit-card-fraud-detection-dataset-2023)** published on Kaggle.
 
 **Description**
+
 This dataset contains **over 550,000 credit card transactions** made by European cardholders in 2023, and all personal details have been anonymized to maintain privacy. This data is widely used for developing and testing fraud detection models.
 
 **Key Features**
