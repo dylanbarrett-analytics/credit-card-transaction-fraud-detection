@@ -77,11 +77,7 @@ This dataset contains **over 550,000 credit card transactions** made by European
 - `08_0_dashboard_feeds.sql`: Prepare base feeds for Tableau dashboard  
 - `08_5_feature_profile.sql`: Build feature profile view for drill-downs  
 - `09_dashboard_kpis_and_pairs.sql`: Define KPI metrics and fraud vs legit comparisons  
-- `10a_ml_features.sql`: Prepare TRAIN, VALID, TEST feature sets    
-- `11_export_csvs.sql`: Export final reporting tables as Tableau-ready CSVs
-
-### **Python Scripts**
-- `10b_train_baseline.py.txt`: Baseline Logistic Regression model using Snowpark Python  
+- `10_export_csvs.sql`: Export final reporting tables as Tableau-ready CSVs
 
 ### **Tableau-Ready CSV Exports**
 - `RPT_DASHBOARD_HEADER.csv`: High-level KPI metrics
