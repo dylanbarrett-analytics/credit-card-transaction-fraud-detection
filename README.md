@@ -230,15 +230,19 @@ This adjustment ensures that all 29 features are comparable on a standardized sc
 - fraud rate
 - Number of fraudulent transactions
 - Total transactions
+
 **Selected Feature KPIs:** feature-level metrics (choose one of 29 features from dropdown parameter)
 - Standardized Separation (SS)
 - Global Maximum Separation ("KS Gap")
 - Ranking (according to SS)
+
 **Top Indicators of Fraud**
 - top 10 features by standardized separation
 - highlights which features most strongly distinguish fraudulent from legit transactions
+
 **Fraud vs Legit Curve Gap**
 - shows the distributional divergence between fraud and legit cases for the selected feature
+
 **Fraud vs Legit Distribution Overlap**
 - displays how much (or how little) the two classes intersect (or overlap)
   - less overlap = higher potential for fraud
