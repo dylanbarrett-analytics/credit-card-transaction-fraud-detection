@@ -204,35 +204,6 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
 
 ---
 
-flowchart TD
-    subgraph Extract
-        A[CSV Source File] --> B[Snowflake Stage: TRANSACTIONS_STAGE]
-    end
-
-    subgraph Load
-        B --> C[STAGING.TRANSACTIONS_RAW]
-    end
-
-    subgraph Transform
-        C --> D[ANALYTICS.TRANSACTIONS_BASE]
-        D --> E[ANALYTICS.TRANSACTIONS_SPLIT<br/>(Deterministic TRAIN / VALID / TEST)]
-    end
-
-    subgraph Reporting
-        E --> F[RPT_OVERALL_SUMMARY]
-        E --> G[RPT_SPLIT_SUMMARY]
-        E --> H[RPT_FRAUD_RATE_BY_AMOUNT]
-        E --> I[RPT_FEATURE_PROFILE]
-        E --> J[RPT_FEATURE_DRILL_DOWN_BINS]
-        E --> K[RPT_DASHBOARD_HEADER]
-    end
-
-    subgraph Export
-        I & J & K --> L[REPORTING.EXPORT_STAGE<br/>(Tableau-ready CSVs)]
-    end
-
----
-
 ## **Tableau**
 
 ### **Standardized Separation (SS)**
