@@ -18,7 +18,7 @@ This dataset contains **over 550,000 credit card transactions** made by European
 
 **Key Features**
 - `id`: Transaction identifier
-- `V1` - `V28`: Engineered numerical features derived using **Principal Component Analysis (PCA)**
+- `V1 - V28`: Engineered numerical features derived using **Principal Component Analysis (PCA)**
   - PCA is a dimensionality-reduction technique that transforms sensitive raw attributes (such as time, location, cardholder details, etc.) into anonymized components, while still preserving useful numerical patterns for analysis.
 - `Amount`: Value of the transaction
 - `Class`: Binary flag that indicates the transaction's status (1 = fraudulent, 0 = legitimate)
