@@ -214,7 +214,7 @@ $$
 
 where:
 - **`DIFF`** = difference in means between fraud and legit classes
-- **`s_p`** = pooled standard deviation across both classes
+- **`\[s_p\]`** = pooled standard deviation across both classes
 
 $$
 s_p = \sqrt{ \frac{(n_{\text{fraud}} - 1) s_{\text{fraud}}^2 + (n_{\text{legit}} - 1) s_{\text{legit}}^2}{n_{\text{fraud}} + n_{\text{legit}} - 2} }
