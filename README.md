@@ -209,7 +209,7 @@ The raw separation values were not directly comparable across all 29 features.
 Therefore, these values were normalized by calculating **Standardized Separation (SS)**:
 
 $$
-SS = \frac{\text{DIFF}}{s_p}
+SS = \frac{\text{|DIFF|}}{s_p}
 $$
 
 where:
