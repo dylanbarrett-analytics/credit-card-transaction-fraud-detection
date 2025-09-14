@@ -188,7 +188,7 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
   - Purpose was to visualize fraud vs legit `SEPARATION` in comparisons (e.g., V14 vs V10, V12 vs V4, etc.)
   - Pairs were chosen from top-ranked features with highest `SEPARATION` values
 
-> Feature vs feature scatterplot comparisons were originally the plan, but this was later scrapped in favor of a **distribution overlap chart** for each feature, as this would provide better supporting context with all 29 features included
+> Feature vs feature scatterplot comparisons were originally the plan, but this was later scrapped in favor of a **distribution overlap chart** for each feature, as this would provide better supporting context with all 29 features included.
 
 **Step 10: Export Reporting Views to CSV**
 - Created stage `@EXPORT_STAGE` in `REPORTING` schema to hold Tableau-ready extracts
@@ -242,6 +242,8 @@ This adjustment ensures that all 29 features are comparable on a standardized sc
 
 **Fraud vs Legit Curve Gap**
 - shows the distributional divergence between fraud and legit cases for the selected feature
+  - larger gap = higher potential for fraud
+  - smaller gap = lower potential for fraud
 
 **Fraud vs Legit Distribution Overlap**
 - displays how much (or how little) the two classes intersect (or overlap)
