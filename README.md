@@ -206,7 +206,7 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
 The raw separation values were not directly comparable across all 29 features.
 - `AMOUNT` had a separation of **67.2**, but the highest among `V1-V28` was only **1.6**.
 
-Therefore, for every feature, the values were normalized by calculating **Standardized Separation (SS)**:
+Therefore, every feature's values were normalized by calculating **Standardized Separation (SS)**:
 
 $$
 SS = \frac{\text{|DIFF|}}{s_p}
