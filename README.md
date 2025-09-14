@@ -204,7 +204,6 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
 
 ---
 
-```mermaid
 flowchart TD
     subgraph Extract
         A[CSV Source File] --> B[Snowflake Stage: TRANSACTIONS_STAGE]
