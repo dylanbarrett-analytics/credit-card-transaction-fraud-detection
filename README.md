@@ -148,7 +148,6 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
   - Calculated:
     - **Difference in Means**: `DIFF` = `FRAUD_AVG` – `LEGIT_AVG`
     - **Separation**: `SEPARATION` = absolute value of `DIFF` (absolute difference in means)
-      - 
 
 > `SEPARATION` is the primary metric in this project because it provides a simple, interpretable signal of **how strongly each feature distinguishes fraud from legitimate transactions**.
 > The word "separation" is used instead of "absolute difference in means" for clarity and storytelling purposes.
