@@ -59,7 +59,6 @@ This dataset contains **over 550,000 credit card transactions** made by European
 
 - **Snowflake:** ELT pipeline and transformations
   - **Snowflake SQL:** Data preparation and feature analysis
-  - **Snowpark Python:** Baseline ML model
 - **Tableau:** Dashboard design and visualization
 
 ---
