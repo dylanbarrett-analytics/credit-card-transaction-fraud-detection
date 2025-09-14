@@ -190,7 +190,7 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
 
 > Feature vs feature scatterplot comparisons were originally the plan, but this was later scrapped in favor of a **distribution overlap chart** for each feature, as this would provide better supporting context with all 29 features included
 
-**Step 11: Export Reporting Views to CSV
+**Step 10: Export Reporting Views to CSV**
 - Created stage `@EXPORT_STAGE` in `REPORTING` schema to hold Tableau-ready extracts
 - Exported views as reproducible **single-file CSVs** with headers:
   - `RPT_DASHBOARD_HEADER`: global-level KPIs
