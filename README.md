@@ -31,7 +31,6 @@ This dataset contains **over 550,000 credit card transactions** made by European
 - **Build an enterprise-style data pipeline** in Snowflake with staging, analytics, and reporting layers
 - **Partition the dataset into TRAIN, VALID, and TEST splits** to support both analysis and model evaluation
 - **Identify the features with the strongest fraud signal**, focusing on the 28 PCA components and the transaction amount field
-- **(Bonus) Train a baseline machine learning model** using Snowpark Python and scikit-learn
 
 ---
 
