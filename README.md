@@ -91,7 +91,13 @@ This dataset contains **over 550,000 credit card transactions** made by European
 
 ## **Project Pipeline/Workflow**
 
-The pipeline was implemented in Snowflake using a layered schema design (**STAGING → ANALYTICS → REPORTING**) aligned with an ELT workflow (**Extract → Load → Transform → Report → Export**).
+The pipeline was implemented in Snowflake using a layered schema design…
+
+> **STAGING → ANALYTICS → REPORTING**
+
+…that is aligned with an ELT workflow 
+
+> **Extract → Load → Transform → Report → Export**
 
 ### **STAGING Layer**
 
