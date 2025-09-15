@@ -150,7 +150,9 @@ The pipeline was implemented in Snowflake using a layered schema design (**STAGI
     - **Separation**: `SEPARATION` = absolute value of `DIFF` (absolute difference in means)
 
 > `SEPARATION` is the primary metric in this project because it provides a simple, interpretable signal of **how strongly each feature distinguishes fraud from legitimate transactions**.
+
 > The word "separation" is used instead of "absolute difference in means" for clarity and storytelling purposes.
+
 > The VALID split was excluded in this step so it can be reserved for model selection.
 
 **Step 8: Dashboard Feeds (Parameter-Driven)**
